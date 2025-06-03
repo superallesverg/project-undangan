@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Kehadiran Tamu</title>
+    <style>
+      :root {
+        --primary-color: #8b4513; /* Sesuaikan dengan style.css Anda */
+        --secondary-color: #d2b48c; /* Sesuaikan dengan style.css Anda */
+        --text-color: #333;
+        --bg-color: #faf0e6; /* Sesuaikan dengan style.css Anda */
+        --font-display: "Playfair Display", serif; /* Sesuaikan */
+        --font-body: "Lato", sans-serif; /* Sesuaikan */
+      }
+      body {
+        font-family: var(--font-body);
+        margin: 0;
+        padding: 20px;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 900px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        font-family: var(--font-display);
+        color: var(--primary-color);
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 12px 15px; /* Padding lebih nyaman */
+        text-align: left;
+        vertical-align: top; /* Untuk pesan yang panjang */
+      }
+      th {
+        background-color: var(--secondary-color);
+        color: var(--primary-color);
+        font-family: var(--font-display);
+        font-weight: 700;
+      }
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+      .no-data {
+        text-align: center;
+        font-style: italic;
+        color: #777;
+        margin-top: 30px;
+        font-size: 1.1em;
+      }
+      .button-container {
+        text-align: center;
+        margin-top: 30px;
+      }
+      .clear-button {
+        background-color: #e74c3c; /* Warna merah untuk hapus */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1em;
+        font-family: var(--font-body);
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .clear-button:hover {
+        background-color: #c0392b;
+      }
+
+      /* Responsive table */
+      @media (max-width: 768px) {
+        table thead {
+          display: none; /* Sembunyikan header tabel tradisional */
+        }
+        table,
+        table tbody,
+        table tr,
+        table td {
+          display: block; /* Ubah tabel menjadi blok */
+          width: 100%;
+        }
+        table tr {
+          margin-bottom: 15px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          background-color: #fff; /* Latar belakang per baris */
+        }
+        table td {
+          text-align: right; /* Konten rata kanan */
+          padding-left: 50%; /* Ruang untuk label */
+          position: relative;
+          border: none; /* Hapus border individu sel */
+          border-bottom: 1px solid #eee; /* Garis pemisah antar data di satu baris */
+        }
+        table td:last-child {
+          border-bottom: none;
+        }
+        table td::before {
+          content: attr(data-label); /* Ambil label dari atribut data-label */
+          position: absolute;
+          left: 10px; /* Posisi label */
+          width: calc(50% - 20px); /* Lebar label */
+          padding-right: 10px;
+          font-weight: bold;
+          text-align: left;
+          font-family: var(--font-display);
+          color: var(--primary-color);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Data Konfirmasi Kehadiran</h1>
+      <div id="rsvp-data-container"></div>
+      <div class="button-container">
+        <button id="clear-data-button" class="clear-button">
+          Bersihkan Semua Data Kehadiran
+        </button>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const rsvpDataContainer = document.getElementById(
+          "rsvp-data-container"
+        );
+        const clearDataButton = document.getElementById("clear-data-button");
+
+        function displayRSVPData() {
+          const rsvpEntries =
+            JSON.parse(localStorage.getItem("rsvpEntries")) || [];
+          rsvpDataContainer.innerHTML = ""; // Bersihkan kontainer sebelum memuat
+
+          if (rsvpEntries.length === 0) {
+            rsvpDataContainer.innerHTML =
+              '<p class="no-data">Belum ada data kehadiran yang tersimpan.</p>';
+            return;
+          }
+
+          const table = document.createElement("table");
+          const thead = document.createElement("thead");
+          const tbody = document.createElement("tbody");
+
+          // Membuat header tabel
+          const headerRow = document.createElement("tr");
+          const headers = [
+            "No.",
+            "Nama",
+            "Kehadiran",
+            "Jumlah",
+            "Pesan/Ucapan",
+            "Waktu Submit",
+          ];
+          headers.forEach((headerText) => {
+            const th = document.createElement("th");
+            th.textContent = headerText;
+            headerRow.appendChild(th);
+          });
+          thead.appendChild(headerRow);
+
+          // Mengisi data ke tabel
+          rsvpEntries.forEach((entry, index) => {
+            const row = document.createElement("tr");
+
+            // Fungsi untuk membuat sel dengan data-label untuk mobile
+            function createCell(data, label) {
+              const td = document.createElement("td");
+              td.textContent = data;
+              td.setAttribute("data-label", label);
+              return td;
+            }
+
+            row.appendChild(createCell(index + 1, "No."));
+            row.appendChild(createCell(entry.nama, "Nama"));
+            row.appendChild(
+              createCell(
+                entry.kehadiran
+                  .replace("_", " ")
+                  .replace(/\b\w/g, (l) => l.toUpperCase()),
+                "Kehadiran"
+              )
+            );
+            row.appendChild(createCell(entry.jumlah, "Jumlah"));
+            row.appendChild(createCell(entry.pesan, "Pesan/Ucapan"));
+            row.appendChild(createCell(entry.timestamp, "Waktu Submit"));
+
+            tbody.appendChild(row);
+          });
+
+          table.appendChild(thead);
+          table.appendChild(tbody);
+          rsvpDataContainer.appendChild(table);
+        }
+
+        clearDataButton.addEventListener("click", function () {
+          if (
+            confirm(
+              "Apakah Anda yakin ingin menghapus semua data kehadiran? Tindakan ini tidak dapat diurungkan."
+            )
+          ) {
+            localStorage.removeItem("rsvpEntries");
+            displayRSVPData(); // Refresh tampilan
+            alert("Semua data kehadiran telah dihapus.");
+          }
+        });
+
+        // Panggil fungsi untuk menampilkan data saat halaman dimuat
+        displayRSVPData();
+      });
+    </script>
+  </body>
+</html>

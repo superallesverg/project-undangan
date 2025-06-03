@@ -113,9 +113,25 @@ document.addEventListener("DOMContentLoaded", function () {
       const pesan = document.getElementById("pesan").value;
       const rsvpResponse = document.getElementById("rsvp-response");
 
+      const newEntry = {
+        nama: nama,
+        kehadiran: kehadiran,
+        jumlah: kehadiran === "hadir" ? jumlah : "-", // Simpan jumlah hanya jika hadir
+        pesan: pesan,
+        timestamp: new Date().toLocaleString("id-ID"), // Tambahkan waktu submit
+      };
+
+      let rsvpEntries = JSON.parse(localStorage.getItem("rsvpEntries")) || [];
+      rsvpEntries.push(newEntry);
+      localStorage.setItem("rsvpEntries", JSON.stringify(rsvpEntries));
+      // === AKHIR BAGIAN localStorage ===
+
       // Di sini Anda biasanya akan mengirim data ke server
       // Untuk contoh ini, kita hanya tampilkan pesan di halaman
-      rsvpResponse.innerHTML = `Terima kasih, ${nama}! Konfirmasi Anda (${kehadiran}) telah kami catat.`;
+      rsvpResponse.innerHTML = `Terima kasih, ${nama}! Konfirmasi Anda (${kehadiran.replace(
+        "_",
+        " "
+      )}) telah kami catat.`; // Pesan yang lebih baik
       rsvpResponse.style.color = "green";
       rsvpForm.reset();
 
