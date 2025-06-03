@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .play()
         .catch((error) => console.log("Autoplay music error:", error));
       updateTombolMusikIcon();
+      startCountdown();
     }
     // Re-initialize AOS atau refresh setelah konten utama ditampilkan
     // agar animasi pada elemen yang baru muncul bisa berjalan
@@ -58,50 +59,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   }
-
-  // Countdown Timer
-  const tanggalPernikahan = new Date("2029-05-22T23:59:59").getTime(); // Format: YYYY-MM-DDTHH:mm:ss
-  // Contoh: "2024-12-25T10:00:00"
-
-  if (!isNaN(tanggalPernikahan)) {
-    const countdownInterval = setInterval(function () {
-      const sekarang = new Date().getTime();
-      const selisih = tanggalPernikahan - sekarang;
-
-      const days = Math.floor(selisih / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((selisih % (1000 * 60)) / 1000);
-
-      document.getElementById("500").innerText = String(days).padStart(2, "0");
-      document.getElementById("24").innerText = String(hours).padStart(2, "0");
-      document.getElementById("00").innerText = String(minutes).padStart(
-        2,
-        "0"
-      );
-      document.getElementById("00").innerText = String(seconds).padStart(
-        2,
-        "0"
-      );
-
-      if (selisih < 0) {
-        clearInterval(countdownInterval);
-        document.getElementById("countdown").innerHTML =
-          "Acara Telah Berlangsung";
-      }
-    }, 1000);
-  } else {
-    console.error(
-      "Format tanggal pernikahan untuk countdown tidak valid. Harap gunakan YYYY-MM-DDTHH:mm:ss"
-    );
-    if (document.getElementById("countdown")) {
-      document.getElementById("countdown").innerHTML =
-        "Pengaturan Tanggal Error";
-    }
-  }
-
   // RSVP Form Submission (Contoh Front-end)
   const rsvpForm = document.getElementById("rsvp-form");
   if (rsvpForm) {
@@ -174,6 +131,110 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
   });
+  // --- Bagian Countdown ---
+  const daysEl = document.getElementById("days");
+  const hoursEl = document.getElementById("hours");
+  const minutesEl = document.getElementById("minutes");
+  const secondsEl = document.getElementById("seconds");
+  const tanggalPernikahanElement = document.querySelector(
+    ".tanggal-pernikahan"
+  );
+  let countdownInterval;
+
+  function parseWeddingDate(dateString) {
+    // Hilangkan kurung siku dan spasi ekstra: "[22 MEI 2029]" -> "22 MEI 2029"
+    let normalizedDateString = dateString.replace(/\[|\]/g, "").trim();
+
+    const monthMap = {
+      JANUARI: "January",
+      FEBRUARI: "February",
+      MARET: "March",
+      APRIL: "April",
+      MEI: "May",
+      JUNI: "June",
+      JULI: "July",
+      AGUSTUS: "August",
+      SEPTEMBER: "September",
+      OKTOBER: "October",
+      NOVEMBER: "November",
+      DESEMBER: "December",
+    };
+
+    const parts = normalizedDateString.split(" "); // ["22", "MEI", "2029"]
+    if (parts.length === 3) {
+      const day = parts[0];
+      const monthKey = parts[1].toUpperCase(); // "MEI"
+      const year = parts[2];
+      const monthEnglish = monthMap[monthKey]; // "May"
+
+      if (monthEnglish) {
+        // Format yang lebih aman untuk new Date(): "May 22, 2029 00:00:00"
+        return new Date(`${monthEnglish} ${day}, ${year} 00:00:00`);
+      }
+    }
+    console.error("Format tanggal pernikahan tidak valid di HTML:", dateString);
+    return null; // Kembalikan null jika parsing gagal
+  }
+
+  // Ambil tanggal pernikahan dari HTML
+  const weddingDateString = tanggalPernikahanElement
+    ? tanggalPernikahanElement.textContent
+    : "[22 MEI 2029]"; // Fallback jika elemen tidak ada
+  const targetDate = parseWeddingDate(weddingDateString);
+
+  function updateCountdown() {
+    if (!targetDate) {
+      // Jika tanggal pernikahan gagal diparsing
+      daysEl.textContent = "N/A";
+      hoursEl.textContent = "N/A";
+      minutesEl.textContent = "N/A";
+      secondsEl.textContent = "N/A";
+      if (countdownInterval) clearInterval(countdownInterval);
+      return;
+    }
+
+    const now = new Date().getTime();
+    const timeLeft = targetDate.getTime() - now;
+
+    if (timeLeft < 0) {
+      clearInterval(countdownInterval);
+      daysEl.textContent = "00";
+      hoursEl.textContent = "00";
+      minutesEl.textContent = "00";
+      secondsEl.textContent = "00";
+      // Anda bisa mengubah seluruh div countdown menjadi pesan, contoh:
+      const countdownDiv = document.getElementById("countdown");
+      if (countdownDiv)
+        countdownDiv.innerHTML =
+          "<p style='font-size: 1.5rem;'>Acara Telah Berlangsung</p>";
+      return;
+    }
+
+    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+    daysEl.textContent = String(days).padStart(2, "0");
+    hoursEl.textContent = String(hours).padStart(2, "0");
+    minutesEl.textContent = String(minutes).padStart(2, "0");
+    secondsEl.textContent = String(seconds).padStart(2, "0");
+  }
+
+  function startCountdown() {
+    if (targetDate) {
+      updateCountdown(); // Panggil sekali agar tidak ada delay 1 detik
+      countdownInterval = setInterval(updateCountdown, 1000);
+    } else {
+      // Tampilkan N/A jika tanggal tidak valid
+      daysEl.textContent = "N/A";
+      hoursEl.textContent = "N/A";
+      minutesEl.textContent = "N/A";
+      secondsEl.textContent = "N/A";
+    }
+  }
 
   // Update tahun di footer
   document.getElementById("tahun").textContent = new Date().getFullYear();
