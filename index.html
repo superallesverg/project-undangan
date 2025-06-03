@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Undangan Pernikahan - [Ubay] & [Nadia]</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div id="overlay-awal">
+      <div class="content-overlay">
+        <p>Kepada Yth.</p>
+        <h2 id="guest-name">Bapak/Ibu/Saudara/i</h2>
+        <p>
+          Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir di
+          acara pernikahan kami.
+        </p>
+        <button id="buka-undangan">Buka Undangan</button>
+      </div>
+    </div>
+
+    <div id="konten-utama" style="display: none">
+      <audio id="background-music" loop>
+        <source src="path-to-your-music.mp3" type="audio/mpeg" />
+        Browser Anda tidak mendukung elemen audio.
+      </audio>
+      <button id="tombol-musik"><i class="fas fa-play"></i></button>
+
+      <header class="hero-section" data-aos="fade-in">
+        <div class="hero-content">
+          <h1>[Ubay] & [Nadia]</h1>
+          <p>Kami mengundang Anda untuk merayakan cinta kami</p>
+          <p class="tanggal-pernikahan">[22 MEI 2029]</p>
+          <div
+            id="countdown"
+            class="countdown"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            <div><span id="days">500</span> Hari</div>
+            <div><span id="hours">24</span> Jam</div>
+            <div><span id="minutes">00</span> Menit</div>
+            <div><span id="seconds">00</span> Detik</div>
+          </div>
+        </div>
+      </header>
+
+      <section class="ayat-section" data-aos="fade-up">
+        <p>
+          "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu
+          isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa
+          tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan
+          sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat
+          tanda-tanda bagi kaum yang berfikir."
+        </p>
+        <p>(QS. Ar-Rum: 21)</p>
+      </section>
+
+      <section class="mempelai-section" data-aos="fade-up">
+        <h2>Pasangan Mempelai</h2>
+        <div class="mempelai-grid">
+          <div class="mempelai" data-aos="fade-right">
+            <img
+              src="path-to-groom-photo.jpg"
+              alt="Foto Mempelai Pria"
+              class="mempelai-foto"
+            />
+            <h3>[Nama Lengkap Mempelai Pria]</h3>
+            <p>Putra dari Bapak [Nama Ayah Pria] & Ibu [Nama Ibu Pria]</p>
+            <a href="[Link Instagram Pria]" target="_blank" class="social-icon"
+              ><i class="fab fa-instagram"></i
+            ></a>
+          </div>
+          <div class="mempelai" data-aos="fade-left">
+            <img
+              src="path-to-bride-photo.jpg"
+              alt="Foto Mempelai Wanita"
+              class="mempelai-foto"
+            />
+            <h3>[Nama Lengkap Mempelai Wanita]</h3>
+            <p>Putri dari Bapak [Nama Ayah Wanita] & Ibu [Nama Ibu Wanita]</p>
+            <a
+              href="[Link Instagram Wanita]"
+              target="_blank"
+              class="social-icon"
+              ><i class="fab fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="acara-section" data-aos="fade-up">
+        <h2>Detail Acara</h2>
+        <div class="acara-grid">
+          <div class="acara-card" data-aos="zoom-in-up">
+            <h3>Akad Nikah</h3>
+            <p><i class="fas fa-calendar-alt"></i> [Hari, Tanggal Akad]</p>
+            <p><i class="fas fa-clock"></i> [Waktu Akad]</p>
+            <p><i class="fas fa-map-marker-alt"></i> [Lokasi Akad Nikah]</p>
+            <p>[Alamat Lengkap Akad]</p>
+          </div>
+          <div class="acara-card" data-aos="zoom-in-up" data-aos-delay="200">
+            <h3>Resepsi</h3>
+            <p><i class="fas fa-calendar-alt"></i> [Hari, Tanggal Resepsi]</p>
+            <p><i class="fas fa-clock"></i> [Waktu Resepsi]</p>
+            <p><i class="fas fa-map-marker-alt"></i> [Lokasi Resepsi]</p>
+            <p>[Alamat Lengkap Resepsi]</p>
+          </div>
+        </div>
+        <div class="map-container" data-aos="fade-up">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.256728023713!2d106.82453401477005!3d-6.208762995409652!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e162397777%3A0x5b33f7a709f2d00d!2sMonas!5e0!3m2!1sen!2sid!4v1622445818530!5m2!1sen!2sid"
+            width="100%"
+            height="450"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+          ></iframe>
+        </div>
+      </section>
+
+      <section class="galeri-section" data-aos="fade-up">
+        <h2>Galeri Kami</h2>
+        <div class="galeri-grid">
+          <img
+            src="path-to-gallery-image1.jpg"
+            alt="Foto Galeri 1"
+            data-aos="zoom-in"
+          />
+          <img
+            src="path-to-gallery-image2.jpg"
+            alt="Foto Galeri 2"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          />
+          <img
+            src="path-to-gallery-image3.jpg"
+            alt="Foto Galeri 3"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          />
+          <img
+            src="path-to-gallery-image4.jpg"
+            alt="Foto Galeri 4"
+            data-aos="zoom-in"
+            data-aos-delay="300"
+          />
+        </div>
+      </section>
+
+      <section class="cerita-section" data-aos="fade-up">
+        <h2>Cerita Cinta Kami</h2>
+        <div class="timeline">
+          <div class="timeline-item" data-aos="fade-right">
+            <div class="timeline-content">
+              <h3>[Tanggal Penting 1]</h3>
+              <p>[Deskripsi singkat kejadian penting 1]</p>
+            </div>
+          </div>
+          <div class="timeline-item" data-aos="fade-left">
+            <div class="timeline-content">
+              <h3>[Tanggal Penting 2]</h3>
+              <p>[Deskripsi singkat kejadian penting 2]</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="rsvp-section" data-aos="fade-up">
+        <h2>Konfirmasi Kehadiran & Ucapan</h2>
+        <form id="rsvp-form">
+          <label for="nama">Nama:</label>
+          <input type="text" id="nama" name="nama" required />
+
+          <label for="kehadiran">Konfirmasi Kehadiran:</label>
+          <select id="kehadiran" name="kehadiran">
+            <option value="hadir">Hadir</option>
+            <option value="tidak_hadir">Tidak Hadir</option>
+            <option value="ragu">Masih Ragu</option>
+          </select>
+
+          <label for="jumlah">Jumlah Tamu (jika hadir):</label>
+          <input type="number" id="jumlah" name="jumlah" min="1" value="1" />
+
+          <label for="pesan">Ucapan & Doa:</label>
+          <textarea id="pesan" name="pesan" rows="4"></textarea>
+
+          <button type="submit">Kirim</button>
+        </form>
+        <div id="rsvp-response" style="margin-top: 15px"></div>
+      </section>
+
+      <section class="hadiah-section" data-aos="fade-up">
+        <h2>Amplop Digital</h2>
+        <p>
+          Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun
+          jika memberi adalah ungkapan tanda kasih, Anda dapat memberi kado
+          secara cashless.
+        </p>
+        <div class="rekening-grid">
+          <div class="rekening-card" data-aos="flip-left">
+            <img
+              src="path-to-bank-logo1.png"
+              alt="Logo Bank 1"
+              class="bank-logo"
+            />
+            <p>Bank [Nama Bank 1]</p>
+            <p>No. Rek: [Nomor Rekening 1]</p>
+            <p>a.n. [Nama Pemilik Rekening 1]</p>
+            <button class="salin-rekening" data-rekening="[Nomor Rekening 1]">
+              Salin No. Rek
+            </button>
+          </div>
+          <div class="rekening-card" data-aos="flip-left" data-aos-delay="200">
+            <img
+              src="path-to-ewallet-logo.png"
+              alt="Logo E-wallet"
+              class="bank-logo"
+            />
+            <p>[Nama E-wallet]</p>
+            <p>No: [Nomor E-wallet]</p>
+            <p>a.n. [Nama Pemilik E-wallet]</p>
+            <button class="salin-rekening" data-rekening="[Nomor E-wallet]">
+              Salin No.
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="protokol-section" data-aos="fade-up">
+        <h2>Protokol Kesehatan</h2>
+        <p>
+          Mengingat situasi pandemi, kami menghimbau para tamu undangan untuk
+          tetap memperhatikan protokol kesehatan:
+        </p>
+        <ul>
+          <li><i class="fas fa-hands-wash"></i> Menggunakan masker.</li>
+          <li><i class="fas fa-social-distancing"></i> Menjaga jarak aman.</li>
+          <li>
+            <i class="fas fa-pump-medical"></i> Menggunakan hand sanitizer yang
+            disediakan.
+          </li>
+          <li>
+            <i class="fas fa-thermometer-three-quarters"></i> Pastikan Anda
+            dalam kondisi sehat.
+          </li>
+        </ul>
+      </section>
+
+      <footer data-aos="fade-up">
+        <p>Terima kasih atas doa restu Anda.</p>
+        <p>
+          &copy; <span id="tahun"></span> [Nama Pria] & [Nama Wanita]. All
+          Rights Reserved.
+        </p>
+        <p>
+          Made with <i class="fas fa-heart"></i> by [Nama Anda/Brand Anda jika
+          ada]
+        </p>
+      </footer>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
