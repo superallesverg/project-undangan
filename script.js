@@ -101,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       let rsvpEntries = JSON.parse(localStorage.getItem("rsvpEntries")) || [];
       rsvpEntries.push(newEntry);
+      console.log("Semua entri yang akan disimpan:", rsvpEntries);
       localStorage.setItem("rsvpEntries", JSON.stringify(rsvpEntries));
       // === AKHIR BAGIAN localStorage ===
 
