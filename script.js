@@ -38,11 +38,32 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Tombol Musik
+
+  backgroundMusic
+    .play()
+    .then(() => {
+      iconMusik.classList.remove("fa-play");
+      iconMusik.classList.add("fa-pause");
+    })
+    .catch((error) => {
+      console.error("Musik gagal diputar secara otomatis:", error);
+      // Anda bisa membiarkan icon tetap 'play' jika gagal,
+      // atau memberi notifikasi bahwa musik perlu di-tap manual
+    });
+
   const tombolMusik = document.getElementById("tombol-musik");
+  if (tombolMusik) {
+    iconMusik = tombolMusik.querySelector("i"); // Beri nilai pada iconMusik
+    if (!iconMusik) {
+      console.error("Elemen <i> di dalam tombol musik tidak ditemukan!");
+    }
+  } else {
+    console.error("Tombol dengan ID 'tombol-musik' tidak ditemukan!");
+  }
   if (tombolMusik && backgroundMusic) {
     tombolMusik.addEventListener("click", function () {
-      if (backgroundMusic.paused) {
-        backgroundMusic.play();
+      if (backgroundMusic.muted) {
+        backgroundMusic.muted = false;
       } else {
         backgroundMusic.pause();
       }
